@@ -1,3 +1,4 @@
 export const renderAbout = (req, res) => {
-    res.render('home', { content: 'pages/about' });
+    const username = req.session.username;
+    res.render('home', { content: 'pages/about', username });
 };
