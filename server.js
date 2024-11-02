@@ -16,12 +16,14 @@ app.use(session({
     secret: 'your_secret_key',
     resave: false,
     saveUninitialized: true,
-    cookie: { 
-        maxAge: 24 * 60 * 60 * 1000
-    }
+    cookie: { secure: false }
 }));
 
 app.use(webRoute);
+
+app.use((req, res) => {
+    return res.send ('404 NOT FOUND');
+})
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);

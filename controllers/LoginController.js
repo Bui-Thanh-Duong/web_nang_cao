@@ -3,7 +3,8 @@ import db from '../config/db.js';
 export const renderLogin = (req, res) => res.render('./login');
 
 export const getUserByUsername = async (username) => {
-    const [[user]] = await db.execute('SELECT * FROM users WHERE username = ?', [username]);
+    const [[user]] = await db.execute('SELECT * FROM users, roles WHERE users.roleid = roles.roleid AND username = ?', [username]);
+
     return user;
 };
 
@@ -17,8 +18,8 @@ export const handleLogin = async (req, res) => {
     if (user.password !== password) {
         return res.status(401).send("Sai mật khẩu");
     }
-
+    req.session.roleid = user.roleid;
+    req.session.userid = user.userid;
     req.session.username = username;
     return res.redirect('/home');
 };
-
