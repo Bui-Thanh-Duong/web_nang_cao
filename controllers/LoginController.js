@@ -1,12 +1,7 @@
-import db from '../config/db.js';
+// LoginController.js
+import { getUserByUsername } from '../models/LoginModel.js';
 
 export const renderLogin = (req, res) => res.render('./login');
-
-export const getUserByUsername = async (username) => {
-    const [[user]] = await db.execute('SELECT * FROM users, roles WHERE users.roleid = roles.roleid AND username = ?', [username]);
-
-    return user;
-};
 
 export const handleLogin = async (req, res) => {
     const { username, password } = req.body;
